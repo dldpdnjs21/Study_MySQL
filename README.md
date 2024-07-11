@@ -99,6 +99,43 @@ like '%a%' -----> a문자를 포함하는 데이터!!           ==> contains
 -----> 'a',  'ab', 'ad', 'abc',  'abbbbb',  'bababa'
 
 
+### <IN 연산자>
+
+형식)  컬럼명    IN  (value_list)
+----> 컬럼의 값이 value_list에 데이터와 하나라도 일치한다면!!
+(OR연산자 유사)
+
+※참고)
+
+ESCAPE옵션  : '%' 또는 '_'를  와일드 카드가 아닌 문자의 의미를 가지고자 할 때 사용.
+
+==> 컬럼명  LIKE '패턴'  ESCAPE '부호';
+
+                             ------
+
+             이스케이프 구분자!!
+
+==> escape를 명시하지 않을 경우 '\'가 기본값
+
+예)
+
+select empno, ename, sal
+
+from  emp
+
+where  ename  like '%\%%'  escape '\';
+
+
+### <BETWEEN AND 연산자>  : 범위 조건시 사용
+
+형식)    컬럼명   BETWEEN  a AND b    ===> a:최소값, b:최대값  ==> a이상 ~ b이하
+컬럼명    BETWEEN  최소값 AND 최대값
+
+   between 1 and 100  ==> 1이상  100이하
+
+※주의 ) BETWEEN AND 연산자는 초과와 미만은 표현을 못함!!
+
+
 ### <ORDER BY절>
 
 - 정렬하여 출력
