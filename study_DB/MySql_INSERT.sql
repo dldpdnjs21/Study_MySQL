@@ -15,7 +15,17 @@ select * from dept;
 
 desc dept;
 
-delete from dept
-WHERE deptno = 50;
+delete from dept WHERE deptno = 50;
+
+INSERT INTO `DEPT` (`DEPTNO`, `DNAME`, `LOC`) VALUES
+(10, 'ACCOUNTING', 'NEW YORK'),
+(20, 'RESEARCH', 'DALLAS'),
+(30, 'SALES', 'CHICAGO'),
+(40, 'OPERATIONS', 'BOSTON');
+commit;
+
+delete from dept;
 
 rollback;
+
+select @@autocommit;
