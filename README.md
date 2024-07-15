@@ -277,3 +277,74 @@ order by 2 asc;
                1차정렬    1차정렬결과에 대한 2차정렬
     
     ```
+    ---
+
+### 제약추가 - 컬럼레벨, 테이블레벨
+
+```sql
+<제약추가 - 컬럼레벨, 테이블레벨>
+create  table 테이블명
+(
+     컬럼명1  자료형,
+     컬럼명2  자료형,
+     컬럼명3  자료형
+);
+CREATE TABLE board
+(
+    컬럼명1 컬럼타입 NOT NULL,
+    컬럼명2 컬럼타입 UNIQUE ,
+    컬럼명3 컬럼타입 PRIMARY KEY,
+    writeDate4  datetime DEFAULT now(),
+ [CONSTRAINT 제약조건이름] UNIQUE (컬럼명)
+ [CONSTRAINT 제약조건이름] PRIMARY KEY (컬럼명)
+ [CONSTRAINT 제약조건이름] FOREIGN KEY (컬럼명) REFERENCES 테이블명 (컬럼명)
+);
+CREATE TABLE board
+(
+    컬럼명1 컬럼타입 NOT NULL,
+    컬럼명2 컬럼타입 UNIQUE ,
+    컬럼명3 컬럼타입 PRIMARY KEY,
+    컬럼명4 컬럼타입 REFERENCES 테이블명 (컬럼명)
+    writeDate4  datetime DEFAULT now()
+);
+CREATE TABLE board
+(
+    컬럼명1 컬럼타입,
+    컬럼명2 컬럼타입,
+    컬럼명3 컬럼타입,
+    writeDate4  datetime DEFAULT now(),
+ [CONSTRAINT 제약조건이름] UNIQUE (컬럼명1)
+ [CONSTRAINT 제약조건이름] PRIMARY KEY (컬럼명2)
+ [CONSTRAINT 제약조건이름] FOREIGN KEY (컬럼명3) REFERENCES 테이블명 (컬럼명)
+);
+CREATE TABLE board
+(
+    컬럼명1 컬럼타입,
+    컬럼명2 컬럼타입,
+    컬럼명3 컬럼타입,
+    writeDate4  datetime DEFAULT now()
+);
+```
+
+### 제약추가 - 변경alter
+
+```sql
+ALTER TABLE 테이블명
+ADD 컬럼명 컬럼타입 NOT NULL;
+ALTER TABLE 테이블명	
+ADD 컬럼명 컬럼타입 UNIQUE;
+ALTER TABLE 테이블명
+ADD [CONSTRAINT 제약조건이름] UNIQUE (컬럼명);
+ALTER TABLE 테이블명
+ADD 컬럼명 컬럼타입 PRIMARY KEY
+ALTER TABLE 테이블명
+ADD [CONSTRAINT 제약조건이름] PRIMARY KEY (컬럼명)
+         constraint     PK_EMP
+                           PK_EMPNO_EMP
+                           EMP_EMPNO_PK
+ALTER TABLE 테이블명
+ADD [CONSTRAINT 제약조건이름] FOREIGN KEY (컬럼명) REFERENCES 테이블명 (컬럼명)
+※참고
+ON UPDATE CASCADE
+ON DELETE CASCADE
+```
