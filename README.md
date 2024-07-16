@@ -1,3 +1,5 @@
+# Study_MySQL
+
 SQL
 - Structured Query Language (구조적인 질의어)
 
