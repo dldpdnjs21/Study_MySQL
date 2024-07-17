@@ -334,3 +334,62 @@ ADD [CONSTRAINT 제약조건이름] FOREIGN KEY (컬럼명) REFERENCES 테이블
 ON UPDATE CASCADE
 ON DELETE CASCADE
 ```
+
+
+### Statement (java.sql.Statement)
+-----------------------------------------------------------------------
+   Statement에서는 executeQuery("DQL문"),excecuteUpdate("DML문")메소드를 
+     실행하는 시점에 파라미터로 SQL문을 DB에 전달한다.   
+     
+    String sql="insert into person values (1,'"+name+"',13,'학생')";
+    
+    stmt = conn.createStatement();
+    stmt.executeUpdate(sql);  ==> 사용자가 입력한 데이터를 sql문과 조합해서 최종 sql문 생성
+                                    ==> 생성된 sql문 실행!!
+     
+   
+   장점 : 사용된 SQL문 전체를 명확히 알 수 가 있어서 디버깅이 쉽다.
+   
+   단점 : 조건값이 틀린 많은 수의 SQL문을 반복 실행하게 되는 경우, DB서버에서 모두 새롭게 
+     PARSING되어야 하므로 부하가 생길수 있다.
+     SQL Injection에 취약.
+     -------------
+     
+     SQL문장 주입  ==> 사용자가 입력한 데이터가 SQL문장을 구성할 수 있다!!
+     
+     예)select count(*) cnt from member where id='a' or 1=1 #' and pass='1234'
+                                                               ------------
+                                                           사용자가 입력한 데이터
+                                                          -------------------------
+                                                             sql구문으로 변환          
+  
+
+### PreparedStatement(java.sql.PreparedStatement)
+-----------------------------------------------------------------------
+  PreparedStatement는 커넥션에서 생성하면서 SQL문이 DB에 전송되어진다.
+  Statement클래스를 상속하고 있음  
+  
+  String sql="insert into person values (?,?,?,?)";
+                                         ---
+                                         ? : 바인드 변수
+                                         
+    stmt = conn.prepareStatement(sql);  ===> (데이터가 빠진)sql문 전송!!
+       //?의 수만큼 설정(데이터 설정)!!
+       stmt.setInt   (1,   1);
+       stmt.setString(2,  name);
+       stmt.setInt   (3,   13);
+       stmt.setString(4,  "학생");
+       
+    stmt.executeUpdate(); ==> ※주의: execute()메소드내에 sql기입하면 안됨.
+       ==> 장점1) 작은따옴표, 큰따옴표, 콤마의 조합 그리고 자료형에 신경쓰지 않아도 됨.
+                    장점2) 사용자가 입력한 (sql구문)데이터가 변경될 염려가 없다.
+  
+  
+  
+  장점: bind변수를 사용하여 DB서버에서 파싱된 SQL을 재사용하게 만듬으로, 
+           반복적인 다량의 SQL수행시 성능상 이득이 있다.
+           반복 루프를 통해서 하나의 SQL문에 변수값만 입력하며 반복 실행 할 수 있음.
+         ★   SQL injection예방의 방법이 될 수 있다.     
+ 
+  단점:
+     오류발생 시, 변수에 입력되는 값을 알 수 없어서 디버깅이 어렵다.
